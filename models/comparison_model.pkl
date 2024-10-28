@@ -1,0 +1,14 @@
+from sklearn.neighbors import NearestNeighbors
+
+# Features for comparison
+features = ['RAM', 'ROM', 'Battery_Power', 'Mobile_Size', 'Primary_Cam', 'Selfi_Cam']
+X = df[features]
+
+# Fit KNN model for similarity search
+knn_model = NearestNeighbors(n_neighbors=5, metric='euclidean')
+knn_model.fit(X)
+
+def find_similar_phones(phone_index, num_recommendations=3):
+    distances, indices = knn_model.kneighbors([X.iloc[phone_index]], n_neighbors=num_recommendations)
+    similar_phones = df.iloc[indices[0]]
+    return similar_phones[['Brand me', 'Model', 'Price', 'RAM', 'Battery_Power']]
