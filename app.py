@@ -8,11 +8,14 @@ CORS(app)
 
 # Load the SVM model
 try:
-    with open("models\svm_model.pkl", 'rb') as f:
+    with open(r"models\svm_model.pkl", 'rb') as f:  # Use forward slashes for cross-platform compatibility
         svm_model = pickle.load(f)
     print("SVM model loaded successfully!")
 except FileNotFoundError as e:
     print(f"Error loading model: {e}")
+    svm_model = None  # Ensure no further errors if the model fails to load
+
+
 
 # Example database setup (optional)
 client = MongoClient("mongodb://localhost:27017/")
